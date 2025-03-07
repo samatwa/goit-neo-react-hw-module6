@@ -1,0 +1,39 @@
+/* ContactForm */
+.contactForm {
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contactFormBox {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.contactForm input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.addBtn {
+  align-self: center;
+  padding: 5px 10px;
+  color: black;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+}
