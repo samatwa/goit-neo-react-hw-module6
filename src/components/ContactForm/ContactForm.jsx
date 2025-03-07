@@ -2,8 +2,13 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, selectContacts } from '../../redux/contactsSlice';
 
-const ContactForm = ({ onAdd }) => {
+const ContactForm = () => {
+  const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(3, 'Must be at least 3 characters')
@@ -15,14 +20,27 @@ const ContactForm = ({ onAdd }) => {
       .required('Required'),
   });
 
+  const handleSubmit = (values, { resetForm }) => {
+    const isDuplicate = contacts.some(
+      contact => contact.name.toLowerCase() === values.name.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      alert(`${values.name} is already in contacts!`);
+      return;
+    }
+
+    const newContact = { id: nanoid(), ...values };
+
+    dispatch(addContact(newContact));
+    resetForm();
+  };
+
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
       validationSchema={validationSchema}
-      onSubmit={(values, { resetForm }) => {
-        onAdd({ id: nanoid(), ...values });
-        resetForm();
-      }}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
         <div className={css.contactFormContainer}>
