@@ -22,17 +22,18 @@ const ContactForm = () => {
 
   const handleSubmit = (values, { resetForm }) => {
     const isDuplicate = contacts.some(
-      contact => contact.name.toLowerCase() === values.name.toLowerCase()
+      contact =>
+        contact.name.toLowerCase() === values.name.toLowerCase() ||
+        contact.number === values.number
     );
 
     if (isDuplicate) {
       alert(`${values.name} is already in contacts!`);
+      resetForm();
       return;
     }
 
-    const newContact = { id: nanoid(), ...values };
-
-    dispatch(addContact(newContact));
+    dispatch(addContact({ id: nanoid(), ...values }));
     resetForm();
   };
 
